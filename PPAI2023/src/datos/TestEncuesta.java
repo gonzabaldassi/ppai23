@@ -25,7 +25,7 @@ public class TestEncuesta {
         
         String BD = "jdbc:postgresql://localhost:5432/ppai";
         String usuario = "postgres";
-        String password = "050Rober3110";
+        String password = "123456";
         
         llamadas.removeAll(llamadas);
         try {
