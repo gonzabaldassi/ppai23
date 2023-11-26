@@ -7,6 +7,8 @@ import java.util.Date;
 import java.sql.*;
 import java.sql.DriverManager;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import javax.swing.JOptionPane;
 
 //----------------------------------------------------------------------------------
@@ -17,17 +19,19 @@ public class TestEncuesta {
     //------------------------------ ATRIBUTOS -----------------------------------------
     public static ArrayList<Llamada> llamadas = new ArrayList<Llamada>();
     public static ArrayList<Encuesta> encuestas = new ArrayList<Encuesta>();
-    public static ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
-    public static ArrayList<Pregunta> preguntas2 = new ArrayList<Pregunta>();
+
+    
 
     public static void main(String[] args) {
         //Conexion a la base de datos
         
         String BD = "jdbc:postgresql://localhost:5432/ppai";
         String usuario = "postgres";
-        String password = "123456";
+        String password = "050Rober3110";
         
         llamadas.removeAll(llamadas);
+
+        encuestas.removeAll(encuestas);
         try {
             Connection conectar = DriverManager.getConnection(BD, usuario, password);
             PreparedStatement queryLlamadas;
@@ -42,7 +46,7 @@ public class TestEncuesta {
 
             queryLlamadas = conectar.prepareCall("SELECT * FROM Llamada INNER JOIN Estado ON Llamada.estado = Estado.id INNER JOIN Cliente ON Llamada.cliente = Cliente.id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             queryRespuestas = conectar.prepareCall("SELECT * FROM RespuestaDeCliente INNER JOIN RespuestaPosible ON RespuestaDeCliente.respuestaPosible = RespuestaPosible.id INNER JOIN Llamada ON RespuestaDeCliente.llamada = Llamada.numeroLlamada", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
-            
+               
 
             resultadoLlamadas = queryLlamadas.executeQuery();
             resultadoRespuestas = queryRespuestas.executeQuery();
@@ -86,10 +90,103 @@ public class TestEncuesta {
             }
             
             
+
+            
+            
+            PreparedStatement queryEncuestas;
+            PreparedStatement queryPreguntas;
+            PreparedStatement queryEncuestaAPregunta;
+            PreparedStatement queryRespuestasPosibles;
+            PreparedStatement queryPreguntaARespuestaPosible;
+            
+
+            ResultSet resultadoEncuestas;
+            ResultSet resultadoPreguntas;
+            ResultSet resultadoEncuestaAPregunta;
+            ResultSet resultadoRespuestasPosibles;
+            ResultSet resultadoPreguntaARespuestaPosible;
+            
+            
+            queryEncuestas = conectar.prepareCall("SELECT * FROM Encuesta");
+            queryPreguntas = conectar.prepareCall("SELECT * FROM Pregunta");
+            queryEncuestaAPregunta = conectar.prepareCall("SELECT * FROM EncuestaAPregunta");
+            queryRespuestasPosibles = conectar.prepareCall("SELECT * FROM RespuestaPosible");
+            queryPreguntaARespuestaPosible = conectar.prepareCall("SELECT * FROM PreguntaARespuestaPosible");
+            
+            resultadoEncuestas = queryEncuestas.executeQuery();
+            resultadoEncuestaAPregunta = queryEncuestaAPregunta.executeQuery();
+            resultadoPreguntas = queryPreguntas.executeQuery();
+            resultadoPreguntaARespuestaPosible = queryPreguntaARespuestaPosible.executeQuery();
+            resultadoRespuestasPosibles = queryRespuestasPosibles.executeQuery();
+            
+            Map<Pregunta, Integer> mapPreguntas = new HashMap<>();
+            mapPreguntas.clear();
+            while (resultadoPreguntas.next()){
+                int numeroPregunta = resultadoPreguntas.getInt(1);
+                ArrayList<RespuestaPosible> respuestasPosibles = new ArrayList<>();
+                while (resultadoPreguntaARespuestaPosible.next()){
+                    if (numeroPregunta == resultadoPreguntaARespuestaPosible.getInt(3)){
+                        int numeroRespuestaPosible = resultadoPreguntaARespuestaPosible.getInt(2);
+                        
+                        while (resultadoRespuestasPosibles.next()){
+                            if (numeroRespuestaPosible == resultadoRespuestasPosibles.getInt(1)){
+                                RespuestaPosible respuestaPosible = new RespuestaPosible(resultadoRespuestasPosibles.getString(2), resultadoRespuestasPosibles.getInt(3));
+                                respuestasPosibles.add(respuestaPosible);
+                            } 
+                        }
+                    }
+                }
+                
+                Pregunta pregunta = new Pregunta(resultadoPreguntas.getString(2), respuestasPosibles);
+                mapPreguntas.put(pregunta,resultadoPreguntas.getInt(1));
+            }
+            
+            System.out.println(mapPreguntas);
+            
+            while(resultadoEncuestas.next()){
+                ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
+                int numeroEncuesta = resultadoEncuestas.getInt(1);
+                while(resultadoEncuestaAPregunta.next()){
+                    if (resultadoEncuestaAPregunta.getInt(2)==numeroEncuesta){
+                        for (Map.Entry<Pregunta, Integer> entry : mapPreguntas.entrySet()){
+                            Pregunta pregunta = entry.getKey();
+                            Integer idPregunta = entry.getValue();
+                            
+                            if (idPregunta == resultadoEncuestaAPregunta.getInt(3)){
+                                preguntas.add(pregunta);
+                            }
+                        }
+                    }
+                }
+                
+                Date fechaInicio = resultadoEncuestas.getDate(4);
+                Date fechaFin = resultadoEncuestas.getDate(3);
+                String outputDateFormat = "MM/dd/yyyy";
+                SimpleDateFormat outputFormat = new SimpleDateFormat(outputDateFormat);
+                String outputDateStringInicio = outputFormat.format(fechaInicio);  
+                Date fInicio = new Date(outputDateStringInicio);
+                String outputDateStringFin = outputFormat.format(fechaFin);  
+                Date fFin = new Date(outputDateStringFin);
+                
+                Encuesta encuesta = new Encuesta(preguntas, resultadoEncuestas.getString(2), fInicio, fFin);
+                encuestas.add(encuesta);
+            }
+            
+            
+            
+            
+            
             queryLlamadas.close();
             queryRespuestas.close();
+                        
+            queryEncuestas.close();
+            queryPreguntas.close(); 
+            queryEncuestaAPregunta.close();
+            queryRespuestasPosibles.close();
+            queryPreguntaARespuestaPosible.close(); 
+            
+            
             conectar.close();
-
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println("Conexion NO realizada");
