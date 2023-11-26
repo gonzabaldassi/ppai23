@@ -99,7 +99,7 @@ public class Llamada {
 
     @Override
     public String toString() { 
-        return "Llamada Nro:" + numeroLlamada + ", Cliente:" + cliente.getnombreCompleto() + ", descripcionOperador:" + descripcionOperador + "Fecha:" + respuestaDeEncuesta.get(0).getFechaEncuesta();
+        return "Llamada Nro:" + numeroLlamada + ", Cliente:" + cliente.getnombreCompleto() + ", descripcionOperador:" + descripcionOperador;
     }
     
     public String getNumeroLlamada(){

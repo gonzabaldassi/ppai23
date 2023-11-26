@@ -107,11 +107,11 @@ public class TestEncuesta {
             ResultSet resultadoPreguntaARespuestaPosible;
             
             
-            queryEncuestas = conectar.prepareCall("SELECT * FROM Encuesta");
-            queryPreguntas = conectar.prepareCall("SELECT * FROM Pregunta");
-            queryEncuestaAPregunta = conectar.prepareCall("SELECT * FROM EncuestaAPregunta");
-            queryRespuestasPosibles = conectar.prepareCall("SELECT * FROM RespuestaPosible");
-            queryPreguntaARespuestaPosible = conectar.prepareCall("SELECT * FROM PreguntaARespuestaPosible");
+            queryEncuestas = conectar.prepareCall("SELECT * FROM Encuesta", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            queryPreguntas = conectar.prepareCall("SELECT * FROM Pregunta", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            queryEncuestaAPregunta = conectar.prepareCall("SELECT * FROM EncuestaAPregunta", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            queryRespuestasPosibles = conectar.prepareCall("SELECT * FROM RespuestaPosible", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
+            queryPreguntaARespuestaPosible = conectar.prepareCall("SELECT * FROM PreguntaARespuestaPosible", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             
             resultadoEncuestas = queryEncuestas.executeQuery();
             resultadoEncuestaAPregunta = queryEncuestaAPregunta.executeQuery();
@@ -141,7 +141,7 @@ public class TestEncuesta {
                 mapPreguntas.put(pregunta,resultadoPreguntas.getInt(1));
             }
             
-            System.out.println(mapPreguntas);
+            
             
             while(resultadoEncuestas.next()){
                 ArrayList<Pregunta> preguntas = new ArrayList<Pregunta>();
@@ -149,15 +149,16 @@ public class TestEncuesta {
                 while(resultadoEncuestaAPregunta.next()){
                     if (resultadoEncuestaAPregunta.getInt(2)==numeroEncuesta){
                         for (Map.Entry<Pregunta, Integer> entry : mapPreguntas.entrySet()){
+                            
                             Pregunta pregunta = entry.getKey();
                             Integer idPregunta = entry.getValue();
-                            
                             if (idPregunta == resultadoEncuestaAPregunta.getInt(3)){
                                 preguntas.add(pregunta);
                             }
                         }
                     }
                 }
+                resultadoEncuestaAPregunta.beforeFirst();
                 
                 Date fechaInicio = resultadoEncuestas.getDate(4);
                 Date fechaFin = resultadoEncuestas.getDate(3);
@@ -170,6 +171,7 @@ public class TestEncuesta {
                 
                 Encuesta encuesta = new Encuesta(preguntas, resultadoEncuestas.getString(2), fInicio, fFin);
                 encuestas.add(encuesta);
+                
             }
             
             
@@ -177,8 +179,7 @@ public class TestEncuesta {
             
             
             queryLlamadas.close();
-            queryRespuestas.close();
-                        
+            queryRespuestas.close();                        
             queryEncuestas.close();
             queryPreguntas.close(); 
             queryEncuestaAPregunta.close();
