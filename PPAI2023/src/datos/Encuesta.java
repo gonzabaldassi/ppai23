@@ -9,7 +9,7 @@ import java.util.Date;
 //----------------------------------------------------------------------------------
 //------------------------------ CLASE ---------------------------------------------
 
-public class Encuesta {
+public class Encuesta implements IAgregado{
     
     //----------------------------------------------------------------------------------
     //------------------------------ ATRIBUTOS -----------------------------------------
@@ -57,4 +57,11 @@ public class Encuesta {
     public ArrayList<Pregunta> getPreguntas() {
         return preguntas;
     }         
+
+    @Override
+    public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
+
+
 }

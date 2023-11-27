@@ -5,6 +5,9 @@ package controlador;
 
 //import datos.Cliente;
 import datos.Encuesta;
+import datos.IAgregado;
+import datos.IIterador;
+import datos.IteradorLlamada;
 import datos.Llamada;
 import datos.Pregunta;
 import datos.TestEncuesta;
@@ -12,12 +15,13 @@ import java.util.Date;
 import javax.swing.JOptionPane;
 import pantalla.AdmPantEnc;
 import java.util.ArrayList; 
+import java.util.Arrays;
 import pantalla.PantCSV;
 
 //----------------------------------------------------------------------------------
 //------------------------------ CLASE ---------------------------------------------
 
-public class GestorEnc {
+public class GestorEnc implements IAgregado{
     
     //----------------------------------------------------------------------------------
     //------------------------------ ATRIBUTOS -----------------------------------------
@@ -75,26 +79,57 @@ public class GestorEnc {
     public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado,Date fechaFinPeriodoSeleccionado){
         this.fechaInicioPeriodoSeleccionado=fechaInicioPeriodoSeleccionado;
         this.fechaFinPeriodoSeleccionado=fechaFinPeriodoSeleccionado;
+        
+        ArrayList<Object> filtros = new ArrayList<>();
+        filtros.add(this.fechaInicioPeriodoSeleccionado);
+        filtros.add(this.fechaFinPeriodoSeleccionado);
+        
         TestEncuesta testEncuesta = new TestEncuesta();
         ArrayList<Llamada> listaLlamadas = new ArrayList<Llamada>();
-        testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
        
+        testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
+     
         listaLlamadas.removeAll(listaLlamadas);
         listaLlamadas.addAll(testEncuesta.llamadas);
         
         llamadasDePeriodo.removeAll(llamadasDePeriodo);
         
-        if (listaLlamadas != null) {  // Verificar si la lista no es nula
-            for (int i = 0; i < listaLlamadas.size(); i++) {
-               if(listaLlamadas.get(i).tieneEncuestaRespondida()){
-                  if(listaLlamadas.get(i).esDePeriodo(fechaInicioPeriodoSeleccionado, fechaFinPeriodoSeleccionado)){
-                    llamadasDePeriodo.add(listaLlamadas.get(i));
-                }  
-               }
+        ArrayList<Object> listaObject = new ArrayList<>(listaLlamadas);
+        
+        if (listaLlamadas != null){
+            IIterador iteradorLlamada = crearIterador(listaObject, filtros);
+            iteradorLlamada.primero();
+            
+            while(iteradorLlamada.haTerminado() == false){
+                Object actual;
+                actual = iteradorLlamada.actual();
+                if(actual!=""){
+                    if(actual instanceof Llamada){
+                        Llamada llamada = (Llamada) actual;
+                        llamadasDePeriodo.add(llamada);
+                        
+                    }
+                }
+                
+                iteradorLlamada.siguiente();
             }
-        } else {
+        }else{
             System.out.println("La lista de llamadas es nula");
-        }  
+        }
+        
+        //Luego de comprobar que ande borrar esto:
+//        if (listaLlamadas != null) {  // Verificar si la lista no es nula
+//            for (int i = 0; i < listaLlamadas.size(); i++) {
+//               if(listaLlamadas.get(i).tieneEncuestaRespondida()){
+//                  if(listaLlamadas.get(i).esDePeriodo(fechaInicioPeriodoSeleccionado, fechaFinPeriodoSeleccionado)){
+//                    llamadasDePeriodo.add(listaLlamadas.get(i));
+//                }  
+//               }
+//            }
+//        } else {
+//            System.out.println("La lista de llamadas es nula");
+//        }  
+
     }
     
     //Metodo 15
@@ -124,7 +159,10 @@ public class GestorEnc {
         if(descripcionPreguntas != null){
             descripcionPreguntas.removeAll(descripcionPreguntas);
         }
+        
         respuestasClienteEncuesta=llamadaSeleccionada.getRespuestasCliente();
+        
+        
         
         TestEncuesta testEncuesta = new TestEncuesta();
         ArrayList<Encuesta> listaEncuestas = new ArrayList<Encuesta>();
@@ -133,7 +171,9 @@ public class GestorEnc {
         listaEncuestas.removeAll(listaEncuestas);
         listaEncuestas.addAll(testEncuesta.encuestas);
         
-        fechaEncuesta= llamadaSeleccionada.getRespuestaDeEncuesta().get(0).getFechaEncuesta();
+        fechaEncuesta= llamadaSeleccionada.getRespuestaDeEncuesta().get(0).getFechaEncuesta(); //ESTO QUEDA COMO ESTÁ PERO HAY QUE VERIFICAR BIEN EN EL DIAG. DE SECUENCIA COMO PONERLO
+        
+        
         
         for (int i =0; i<listaEncuestas.size();i++){
             if (listaEncuestas.get(i).esEncuestaDeCliente(fechaEncuesta)){
@@ -182,6 +222,12 @@ public class GestorEnc {
            
     public ArrayList<Llamada> getLlamadasDePeriodo() {
         return llamadasDePeriodo;
+    }
+
+    @Override
+    public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
+        IteradorLlamada iteradorLlamada = new IteradorLlamada(elementos, filtros);
+        return iteradorLlamada;
     }
 
 }
