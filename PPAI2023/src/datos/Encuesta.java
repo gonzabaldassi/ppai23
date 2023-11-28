@@ -48,9 +48,29 @@ public class Encuesta implements IAgregado{
     //Metodo 30
     public ArrayList<String> getDescripcionPregunta(){
         ArrayList<String> descripcionPreguntas = new ArrayList<String>();
-        for (int i =0;i<preguntas.size();i++){
-                descripcionPreguntas.add(preguntas.get(i).getDescripcionPregunta());
+        
+        ArrayList<Object> listaObject = new ArrayList<>(this.preguntas);
+        ArrayList<Object> filtros = new ArrayList<>();
+  
+        
+        IIterador iteradorPreguntas = crearIterador(listaObject,filtros);
+        
+        iteradorPreguntas.primero();
+        
+        while(iteradorPreguntas.haTerminado() == false){
+            Object actual;
+            actual = iteradorPreguntas.actual();
+            
+            if (actual instanceof Pregunta){
+                Pregunta pregunta = (Pregunta) actual;
+                descripcionPreguntas.add(pregunta.getDescripcionPregunta());
+            }
+            
+            iteradorPreguntas.siguiente();
         }
+        
+        
+        
         return descripcionPreguntas;
     }    
     
@@ -60,7 +80,8 @@ public class Encuesta implements IAgregado{
 
     @Override
     public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        IteradorPregunta iteradorPregunta = new IteradorPregunta(elementos);
+        return iteradorPregunta;
     }
 
 

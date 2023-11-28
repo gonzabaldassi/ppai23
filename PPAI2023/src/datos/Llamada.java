@@ -89,11 +89,7 @@ public class Llamada implements IAgregado {
             iteradorRespuestaCliente.siguiente();
             
         }
-
-//        for (int i = 0; respuestaDeEncuesta.size() > i; i++) {
-//            String respuesta = respuestaDeEncuesta.get(i).getRespCliente();
-//            vectorRespuestas.add(respuesta);
-//        }
+        
         return vectorRespuestas;
     }
 

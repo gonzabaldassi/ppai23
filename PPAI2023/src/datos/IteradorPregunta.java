@@ -11,15 +11,26 @@ import java.util.ArrayList;
  * @author Usuario
  */
 public class IteradorPregunta implements IIterador{
+    private ArrayList<Object> elementos;
+    private int indiceActual;
 
+    public IteradorPregunta(ArrayList<Object> elementos) {
+        this.elementos = elementos;
+    }
+    
+    
     @Override
     public Object actual() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        return elementos.get(indiceActual);
     }
 
     @Override
     public Boolean haTerminado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if (indiceActual == elementos.size()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
@@ -29,12 +40,12 @@ public class IteradorPregunta implements IIterador{
 
     @Override
     public void primero() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.indiceActual = 0;
     }
 
     @Override
     public void siguiente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.indiceActual+=1;
     }
     
 }

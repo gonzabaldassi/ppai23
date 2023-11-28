@@ -5,36 +5,62 @@
 package datos;
 
 import java.util.ArrayList;
+import java.util.Date;
 
 /**
  *
  * @author Usuario
  */
 public class IteradorEncuesta implements IIterador{
+    private ArrayList<Object> elementos;
+    private ArrayList<Object> filtros;
+    private int indiceActual;
 
+    public IteradorEncuesta(ArrayList<Object> elementos, ArrayList<Object> filtros) {
+        this.elementos = elementos;
+        this.filtros = filtros;
+    }
+    
+    
     @Override
     public Object actual() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(cumpleFiltro(filtros)){
+            System.out.println("CUMPLE EL FILTRO");
+            return elementos.get(indiceActual);
+        }else{
+            return "";
+        }
     }
 
     @Override
     public Boolean haTerminado() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        if(this.indiceActual == elementos.size()){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public Boolean cumpleFiltro(ArrayList<Object> filtros) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        Encuesta encuesta = (Encuesta)elementos.get(indiceActual);
+        Date fechaEncuesta = (Date)filtros.get(0) ;
+        
+        if(encuesta.esEncuestaDeCliente(fechaEncuesta)){
+            return true;
+        }else{
+            return false;
+        }
     }
 
     @Override
     public void primero() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.indiceActual = 0;
     }
 
     @Override
     public void siguiente() {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        this.indiceActual+=1;
     }
 
 }
