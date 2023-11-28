@@ -66,11 +66,13 @@ public class GestorEnc implements IAgregado {
         if (fechaInicioPeriodoSeleccionado != null && fechaFinPeriodoSeleccionado != null) {
             if (fechaInicioPeriodoSeleccionado.after(fechaFinPeriodoSeleccionado)) {
                 JOptionPane.showMessageDialog(null, "Error: La fecha de incio del periodo es mayor,por favor seleccione otro periodo");
+                llamadasDePeriodo.removeAll(llamadasDePeriodo);
             } else {
                 buscarLlamadasPeriodo(fechaInicioPeriodoSeleccionado, fechaFinPeriodoSeleccionado);
             }
         } else {
             JOptionPane.showMessageDialog(null, "Error: alguna de las fechas no fue ingresada");
+            llamadasDePeriodo.removeAll(llamadasDePeriodo);
         }
     }
 
