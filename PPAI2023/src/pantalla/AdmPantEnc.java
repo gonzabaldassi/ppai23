@@ -105,9 +105,16 @@ public class AdmPantEnc extends javax.swing.JFrame {
     public void solicitarFormaDeVisualizar(){}
 
     //Metodo34
+    
+    //METODO MODIFICADO PARA EL PATRON SINGLETON 
+    
     public void tomarSelCSV(){
         formaVisualizar=jComboBoxVisualizacion.getSelectedItem().toString();
-        gestor.tomarSelCSV(jComboBoxVisualizacion.getSelectedItem().toString());
+        if (formaVisualizar == "CSV"){
+            gestor.tomarSelCSV(formaVisualizar);
+        } else {
+            gestor.tomarSelImpresion(formaVisualizar);
+        }
     }
     
     
@@ -259,7 +266,7 @@ public class AdmPantEnc extends javax.swing.JFrame {
         jLabelFormaVisualizacion.setText("Forma de visualización");
         jLabelFormaVisualizacion.setEnabled(false);
 
-        jComboBoxVisualizacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "CSV" }));
+        jComboBoxVisualizacion.setModel(new javax.swing.DefaultComboBoxModel<>(new String[] { "--Seleccione--", "CSV", "PDF" }));
         jComboBoxVisualizacion.setEnabled(false);
         jComboBoxVisualizacion.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {

@@ -21,18 +21,30 @@ import javax.swing.JOptionPane;
 //----------------------------------------------------------------------------------
 //------------------------------ CLASE ---------------------------------------------
 public class Conexion {
+<<<<<<< HEAD
+=======
+
+>>>>>>> origin/singleton
     //----------------------------------------------------------------------------------
     //------------------------------ ATRIBUTOS -----------------------------------------
     public static ArrayList<Llamada> llamadas = new ArrayList<Llamada>();
     public static ArrayList<Encuesta> encuestas = new ArrayList<Encuesta>();
 
+<<<<<<< HEAD
+=======
+    
+>>>>>>> origin/singleton
 
     public static void main(String[] args) {
         //Conexion a la base de datos
         
         String BD = "jdbc:postgresql://localhost:5432/ppai";
         String usuario = "postgres";
+<<<<<<< HEAD
         String password = "123456";
+=======
+        String password = "pass";
+>>>>>>> origin/singleton
         
         llamadas.removeAll(llamadas);
 
@@ -45,7 +57,14 @@ public class Conexion {
 
             ResultSet resultadoLlamadas;
             ResultSet resultadoRespuestas;
+<<<<<<< HEAD
                       
+=======
+            
+
+            
+
+>>>>>>> origin/singleton
             queryLlamadas = conectar.prepareCall("SELECT * FROM Llamada INNER JOIN Estado ON Llamada.estado = Estado.id INNER JOIN Cliente ON Llamada.cliente = Cliente.id", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
             queryRespuestas = conectar.prepareCall("SELECT * FROM RespuestaDeCliente INNER JOIN RespuestaPosible ON RespuestaDeCliente.respuestaPosible = RespuestaPosible.id INNER JOIN Llamada ON RespuestaDeCliente.llamada = Llamada.numeroLlamada", ResultSet.TYPE_SCROLL_INSENSITIVE, ResultSet.CONCUR_READ_ONLY);
                

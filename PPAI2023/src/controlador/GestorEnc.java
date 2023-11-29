@@ -17,6 +17,7 @@ import pantalla.AdmPantEnc;
 import java.util.ArrayList;
 import java.util.Arrays;
 import pantalla.PantCSV;
+import pantalla.ImpresorEncuesta;
 
 //----------------------------------------------------------------------------------
 //------------------------------ CLASE ---------------------------------------------
@@ -78,6 +79,7 @@ public class GestorEnc implements IAgregado {
 
     
     //Metodo 10
+<<<<<<< HEAD
     public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado, Date fechaFinPeriodoSeleccionado) {
         this.fechaInicioPeriodoSeleccionado = fechaInicioPeriodoSeleccionado;
         this.fechaFinPeriodoSeleccionado = fechaFinPeriodoSeleccionado;
@@ -86,6 +88,11 @@ public class GestorEnc implements IAgregado {
         filtros.add(this.fechaInicioPeriodoSeleccionado);
         filtros.add(this.fechaFinPeriodoSeleccionado);
 
+=======
+    public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado,Date fechaFinPeriodoSeleccionado){
+        this.fechaInicioPeriodoSeleccionado=fechaInicioPeriodoSeleccionado;
+        this.fechaFinPeriodoSeleccionado=fechaFinPeriodoSeleccionado;
+>>>>>>> origin/singleton
         Conexion testEncuesta = new Conexion();
         ArrayList<Llamada> listaLlamadas = new ArrayList<Llamada>();
 
@@ -148,6 +155,7 @@ public class GestorEnc implements IAgregado {
             descripcionPreguntas.removeAll(descripcionPreguntas);
         }
         
+<<<<<<< HEAD
         //Acá se instancia el getRespuestasCliente que luego en la llamada se crea el iterador para las RespuestaCliente.
         respuestasClienteEncuesta = llamadaSeleccionada.getRespuestasCliente();
         
@@ -155,6 +163,8 @@ public class GestorEnc implements IAgregado {
         fechaEncuesta = llamadaSeleccionada.getRespuestaDeEncuesta().get(0).getFechaEncuesta(); //ESTO QUEDA COMO ESTÁ PERO HAY QUE VERIFICAR BIEN EN EL DIAG. DE SECUENCIA COMO PONERLO
 
         
+=======
+>>>>>>> origin/singleton
         Conexion testEncuesta = new Conexion();
         ArrayList<Encuesta> listaEncuestas = new ArrayList<Encuesta>();
         testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
@@ -203,9 +213,15 @@ public class GestorEnc implements IAgregado {
     }
 
     //Metodo 35
+<<<<<<< HEAD
     public void tomarSelCSV(String formaDeVisualizacion) {
         this.formaDeVisualizacion = formaDeVisualizacion;
         if (this.formaDeVisualizacion == "CSV") {
+=======
+    public void tomarSelCSV(String formaDeVisualizacion){
+        this.formaDeVisualizacion=formaDeVisualizacion;
+        if ("CSV".equals(this.formaDeVisualizacion)){
+>>>>>>> origin/singleton
             generarCSV();
         }
     }
@@ -225,6 +241,35 @@ public class GestorEnc implements IAgregado {
 
     public ArrayList<Llamada> getLlamadasDePeriodo() {
         return llamadasDePeriodo;
+    }
+    
+    //PATRON SINGLETON
+    
+    public void tomarSelImpresion(String formaDeVisualizacion){
+        this.formaDeVisualizacion=formaDeVisualizacion;
+        if ("PDF".equals(this.formaDeVisualizacion)){
+            imprimir();
+        }
+    }
+    
+    public void imprimir(){
+
+        //OBTENIENDO TODOS LOS STRINGS
+        String clienteCSV= datosClienteLlamadaSeleccionada.substring(59, datosClienteLlamadaSeleccionada.length());
+        String estadoLlamadaCSV= estadoLlamadaSeleccionada;
+        int duracionLlamadaCSV = duracionLlamadaSeleccionada;
+        String preguntasConRespuestaCSV = "";
+        for (int i = 0;i<descripcionPreguntas.size();i++ ){
+           preguntasConRespuestaCSV += descripcionPreguntas.get(i) + " , " + respuestasClienteEncuesta.get(i) + "\n";
+        }
+        
+        String datosFinal = clienteCSV + ";\n" + estadoLlamadaCSV + ";\n" + "Duracion: " + duracionLlamadaCSV + ";\n" + preguntasConRespuestaCSV;
+        
+        //OBTENEMOS LA INSTANCIA DEL SINGLETON
+        ImpresorEncuesta instanciaImpresor = ImpresorEncuesta.getInstancia();
+        
+        //LLAMAMOS AL METODO IMPRIMIR CON EL STRING FINAL
+        instanciaImpresor.imprimir(datosFinal);
     }
 
     @Override
