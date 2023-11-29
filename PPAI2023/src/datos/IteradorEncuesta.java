@@ -25,7 +25,6 @@ public class IteradorEncuesta implements IIterador{
     @Override
     public Object actual() {
         if(cumpleFiltro(filtros)){
-            System.out.println("CUMPLE EL FILTRO");
             return elementos.get(indiceActual);
         }else{
             return "";

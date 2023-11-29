@@ -184,7 +184,6 @@ public class GestorEnc implements IAgregado {
                 if (actual instanceof Encuesta) {
                     Encuesta encuesta = (Encuesta) actual;
                     descripcionEncuesta = encuesta.getDescripcionEncuesta();
-                    System.out.println("Encontró la encuesta");
                     descripcionPreguntas = encuesta.getDescripcionPregunta();
                 }
             }
