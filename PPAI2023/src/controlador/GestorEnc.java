@@ -184,7 +184,6 @@ public class GestorEnc implements IAgregado {
                 if (actual instanceof Encuesta) {
                     Encuesta encuesta = (Encuesta) actual;
                     descripcionEncuesta = encuesta.getDescripcionEncuesta();
-                    System.out.println("Encontró la encuesta");
                     descripcionPreguntas = encuesta.getDescripcionPregunta();
                 }
             }
@@ -237,7 +236,6 @@ public class GestorEnc implements IAgregado {
     }
     
     public void imprimir(){
-
         //OBTENIENDO TODOS LOS STRINGS
         String clienteCSV= datosClienteLlamadaSeleccionada.substring(59, datosClienteLlamadaSeleccionada.length());
         String estadoLlamadaCSV= estadoLlamadaSeleccionada;

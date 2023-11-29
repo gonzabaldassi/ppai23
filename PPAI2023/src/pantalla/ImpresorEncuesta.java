@@ -49,7 +49,7 @@ public class ImpresorEncuesta {
             contadorInstanciasImpresas += 1;
             
             JOptionPane.showMessageDialog(null, "PDF generado correctamente");
-            //System.exit(0);
+            System.exit(0);
         }catch(Exception E){
             JOptionPane.showMessageDialog(null, "PDF no se pudo generar correctamente");
         }

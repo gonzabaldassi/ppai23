@@ -92,10 +92,7 @@ public class Conexion {
                 
             }
             
-            
-
-            
-            
+   
             PreparedStatement queryEncuestas;
             PreparedStatement queryPreguntas;
             PreparedStatement queryEncuestaAPregunta;
@@ -194,13 +191,7 @@ public class Conexion {
         } catch (SQLException e) {
             JOptionPane.showMessageDialog(null, e.getMessage());
             System.out.println("Conexion NO realizada");
-        }
-
-
-        
-        
-        
-        
+        }   
     }
 
 }
