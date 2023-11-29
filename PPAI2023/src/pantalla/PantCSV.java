@@ -23,7 +23,7 @@ public class PantCSV {
     private int duracionLlamadaCSV;
     private String preguntasConRespuestaCSV;
     private String nombreArchivo;
-    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyyMMddHHmmss");
+    SimpleDateFormat dateFormat = new SimpleDateFormat("yyyy-MM-dd_HHmmss");
     String timestamp = dateFormat.format(new Date());
     
     //----------------------------------------------------------------------------------
@@ -44,7 +44,7 @@ public class PantCSV {
             FileWriter fw = new FileWriter(nombreArchivo, true);
             BufferedWriter bw = new BufferedWriter(fw);
             PrintWriter pw = new PrintWriter(bw);
-            pw.println("Encabezado: " + "\n" + clienteCSV + "," + estadoLlamadaCSV + "," + duracionLlamadaCSV + "\n" + "Preguntas: "  + "\n" + preguntasConRespuestaCSV);
+            pw.println("Encabezado: " + "\n" + clienteCSV + "," + estadoLlamadaCSV + "," + "Duracion: " + duracionLlamadaCSV + "\n" + "Preguntas: "  + "\n" + preguntasConRespuestaCSV);
             pw.flush();
             pw.close();
             JOptionPane.showMessageDialog(null, "CSV generado correctamente");

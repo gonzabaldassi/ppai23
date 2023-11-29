@@ -7,12 +7,13 @@ package controlador;
 import datos.Encuesta;
 import datos.Llamada;
 import datos.Pregunta;
-import datos.TestEncuesta;
+import conexion.Conexion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import pantalla.AdmPantEnc;
 import java.util.ArrayList; 
 import pantalla.PantCSV;
+import pantalla.ImpresorEncuesta;
 
 //----------------------------------------------------------------------------------
 //------------------------------ CLASE ---------------------------------------------
@@ -75,7 +76,7 @@ public class GestorEnc {
     public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado,Date fechaFinPeriodoSeleccionado){
         this.fechaInicioPeriodoSeleccionado=fechaInicioPeriodoSeleccionado;
         this.fechaFinPeriodoSeleccionado=fechaFinPeriodoSeleccionado;
-        TestEncuesta testEncuesta = new TestEncuesta();
+        Conexion testEncuesta = new Conexion();
         ArrayList<Llamada> listaLlamadas = new ArrayList<Llamada>();
         testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
        
@@ -126,7 +127,7 @@ public class GestorEnc {
         }
         respuestasClienteEncuesta=llamadaSeleccionada.getRespuestasCliente();
         
-        TestEncuesta testEncuesta = new TestEncuesta();
+        Conexion testEncuesta = new Conexion();
         ArrayList<Encuesta> listaEncuestas = new ArrayList<Encuesta>();
         testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
        
@@ -162,7 +163,7 @@ public class GestorEnc {
     //Metodo 35
     public void tomarSelCSV(String formaDeVisualizacion){
         this.formaDeVisualizacion=formaDeVisualizacion;
-        if (this.formaDeVisualizacion=="CSV"){
+        if ("CSV".equals(this.formaDeVisualizacion)){
             generarCSV();
         }
     }
@@ -182,6 +183,35 @@ public class GestorEnc {
            
     public ArrayList<Llamada> getLlamadasDePeriodo() {
         return llamadasDePeriodo;
+    }
+    
+    //PATRON SINGLETON
+    
+    public void tomarSelImpresion(String formaDeVisualizacion){
+        this.formaDeVisualizacion=formaDeVisualizacion;
+        if ("PDF".equals(this.formaDeVisualizacion)){
+            imprimir();
+        }
+    }
+    
+    public void imprimir(){
+
+        //OBTENIENDO TODOS LOS STRINGS
+        String clienteCSV= datosClienteLlamadaSeleccionada.substring(59, datosClienteLlamadaSeleccionada.length());
+        String estadoLlamadaCSV= estadoLlamadaSeleccionada;
+        int duracionLlamadaCSV = duracionLlamadaSeleccionada;
+        String preguntasConRespuestaCSV = "";
+        for (int i = 0;i<descripcionPreguntas.size();i++ ){
+           preguntasConRespuestaCSV += descripcionPreguntas.get(i) + " , " + respuestasClienteEncuesta.get(i) + "\n";
+        }
+        
+        String datosFinal = clienteCSV + ";\n" + estadoLlamadaCSV + ";\n" + "Duracion: " + duracionLlamadaCSV + ";\n" + preguntasConRespuestaCSV;
+        
+        //OBTENEMOS LA INSTANCIA DEL SINGLETON
+        ImpresorEncuesta instanciaImpresor = ImpresorEncuesta.getInstancia();
+        
+        //LLAMAMOS AL METODO IMPRIMIR CON EL STRING FINAL
+        instanciaImpresor.imprimir(datosFinal);
     }
 
 }
