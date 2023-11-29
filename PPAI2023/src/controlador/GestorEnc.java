@@ -10,7 +10,7 @@ import datos.IteradorEncuesta;
 import datos.IteradorLlamada;
 import datos.Llamada;
 import datos.Pregunta;
-import datos.TestEncuesta;
+import conexion.Conexion;
 import java.util.Date;
 import javax.swing.JOptionPane;
 import pantalla.AdmPantEnc;
@@ -76,6 +76,7 @@ public class GestorEnc implements IAgregado {
         }
     }
 
+    
     //Metodo 10
     public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado, Date fechaFinPeriodoSeleccionado) {
         this.fechaInicioPeriodoSeleccionado = fechaInicioPeriodoSeleccionado;
@@ -85,7 +86,7 @@ public class GestorEnc implements IAgregado {
         filtros.add(this.fechaInicioPeriodoSeleccionado);
         filtros.add(this.fechaFinPeriodoSeleccionado);
 
-        TestEncuesta testEncuesta = new TestEncuesta();
+        Conexion testEncuesta = new Conexion();
         ArrayList<Llamada> listaLlamadas = new ArrayList<Llamada>();
 
         testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
@@ -108,7 +109,6 @@ public class GestorEnc implements IAgregado {
                     if (actual instanceof Llamada) {
                         Llamada llamada = (Llamada) actual;
                         llamadasDePeriodo.add(llamada);
-
                     }
                 }
 
@@ -155,7 +155,7 @@ public class GestorEnc implements IAgregado {
         fechaEncuesta = llamadaSeleccionada.getRespuestaDeEncuesta().get(0).getFechaEncuesta(); //ESTO QUEDA COMO ESTÁ PERO HAY QUE VERIFICAR BIEN EN EL DIAG. DE SECUENCIA COMO PONERLO
 
         
-        TestEncuesta testEncuesta = new TestEncuesta();
+        Conexion testEncuesta = new Conexion();
         ArrayList<Encuesta> listaEncuestas = new ArrayList<Encuesta>();
         testEncuesta.main(null);  //Llama al método de testEncuesta pasando null como argumento. Ahora puedes usar la lista aquí
 
