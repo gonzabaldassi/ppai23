@@ -31,6 +31,7 @@ public class Encuesta implements IAgregado{
     }
     
     //Metodo 28
+    //Metodo 30 - Iterator
     public boolean esEncuestaDeCliente(Date fechaEncuesta){
         if(fechaEncuesta.before(fechaFinVigencia) && fechaEncuesta.after(fechaInicioVigencia)){
             return true;
@@ -41,11 +42,13 @@ public class Encuesta implements IAgregado{
 
     //Se obtiene la descripcion de la Encuesta
     //Metodo 29
+    //Metodo 31 - Iterator
     public String getDescripcionEncuesta(){
         return descripcion;
     }
 
     //Metodo 30
+    //Metodo 32 - Iterator
     public ArrayList<String> getDescripcionPregunta(){
         ArrayList<String> descripcionPreguntas = new ArrayList<String>();
         
@@ -78,6 +81,7 @@ public class Encuesta implements IAgregado{
         return preguntas;
     }         
 
+    //Metodo 33 - Iterator
     @Override
     public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
         IteradorPregunta iteradorPregunta = new IteradorPregunta(elementos);

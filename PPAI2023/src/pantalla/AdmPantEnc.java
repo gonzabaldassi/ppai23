@@ -1,6 +1,7 @@
 package pantalla;
 import controlador.GestorEnc;
 import datos.Llamada;
+import java.awt.Color;
 import java.util.ArrayList;
 import java.util.Date;
 import javax.swing.JOptionPane;
@@ -45,8 +46,8 @@ public class AdmPantEnc extends javax.swing.JFrame {
         fechaHasta = jDateChooserFechaFin.getDate();
         return fechaHasta;
     }
-    
-    //Metodo13
+    //Metodo 13
+    //Metodo 11 - Iterator
     public void mostrarLlamadasParaSeleccion(){
         grillaLlamadas = gestor.getLlamadasDePeriodo();
         
@@ -121,8 +122,23 @@ public class AdmPantEnc extends javax.swing.JFrame {
     
     public AdmPantEnc() {
         initComponents();
+        personalizarInterfaz();
     }
-    
+
+    private void personalizarInterfaz() {
+        // Ajustes de estilo y diseño
+        jButton1Confirmar.setBackground(new Color(51, 153, 255));
+        jButton1Confirmar.setForeground(Color.WHITE);
+
+        jButtonCancelar.setBackground(new Color(255, 51, 51));
+        jButtonCancelar.setForeground(Color.WHITE);
+
+        jButtonConfirmarSeleccion.setBackground(new Color(0, 100, 102));
+        jButtonConfirmarSeleccion.setForeground(Color.WHITE);
+
+        BotonFormaVisualizacion.setBackground(new Color(255, 153, 0));
+        BotonFormaVisualizacion.setForeground(Color.WHITE);
+    }
     
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
@@ -191,8 +207,8 @@ public class AdmPantEnc extends javax.swing.JFrame {
                         .addGroup(bgLayout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                             .addGroup(bgLayout.createSequentialGroup()
                                 .addComponent(jButton1Confirmar)
-                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 82, Short.MAX_VALUE)
-                                .addComponent(jButtonCancelar, javax.swing.GroupLayout.PREFERRED_SIZE, 87, javax.swing.GroupLayout.PREFERRED_SIZE))
+                                .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, 130, Short.MAX_VALUE)
+                                .addComponent(jButtonCancelar))
                             .addComponent(jDateChooserFechaInicio, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                             .addComponent(jDateChooserFechaFin, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
                         .addGap(79, 79, 79))))

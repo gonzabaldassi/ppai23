@@ -25,6 +25,7 @@ public class RespuestaPosible {
     
     //Se retorna la descripcion de la respuesta
     //Metodo 25
+    //Metodo 20 - Iterator
     public String getDescripcionRta(){
         return descripcion; 
     }

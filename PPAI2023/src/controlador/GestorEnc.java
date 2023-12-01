@@ -76,9 +76,8 @@ public class GestorEnc implements IAgregado {
             llamadasDePeriodo.removeAll(llamadasDePeriodo);
         }
     }
-
-    
     //Metodo 10
+   //Metodo 1 - Iterator
     public void buscarLlamadasPeriodo(Date fechaInicioPeriodoSeleccionado, Date fechaFinPeriodoSeleccionado) {
         this.fechaInicioPeriodoSeleccionado = fechaInicioPeriodoSeleccionado;
         this.fechaFinPeriodoSeleccionado = fechaFinPeriodoSeleccionado;
@@ -139,6 +138,7 @@ public class GestorEnc implements IAgregado {
     }
 
     //Metodo 22
+    //Metodo 12 - Iterator
     public String obtenerDatosEncuesta(Llamada llamadaSeleccionada) {
 
         if (respuestasClienteEncuesta != null) {
@@ -254,6 +254,8 @@ public class GestorEnc implements IAgregado {
         instanciaImpresor.imprimir(datosFinal);
     }
 
+    //Metodo 2 - Iterator
+    //Metodo 24 - Iterator
     @Override
     public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
         if (elementos.get(0) instanceof Llamada) {

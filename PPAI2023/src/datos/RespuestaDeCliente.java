@@ -26,11 +26,13 @@ public class RespuestaDeCliente {
     }
     
     //Metodo 24
+    //Metodo 19 - Iterator
     public String getRespCliente() {
         return respuestaSeleccionada.getDescripcionRta();
     } 
 
     //Metodo 27
+    //Metodo 23 - Iterator
     public Date getFechaEncuesta() {
         return fechaEncuesta;
     } 

@@ -31,8 +31,7 @@ public class Llamada implements IAgregado {
         this.duracion = duracion;
         this.encuestaEnviada = encuestaEnviada;
     }
-
-    //Metodo 11
+    //Metodo 8 - Iterator
     public boolean tieneEncuestaRespondida() {
         if (respuestaDeEncuesta != null) {
             return true;
@@ -40,8 +39,9 @@ public class Llamada implements IAgregado {
             return false;
         }
     }
-
+    
     //Metodo 12
+    //Metodo 9 - Iterator
     public boolean esDePeriodo(Date fechaInicioPeriodo, Date fechaFinPeriodo) {
         Date fechaEncuesta = respuestaDeEncuesta.get(0).getFechaEncuesta();
         if (fechaEncuesta.after(fechaInicioPeriodo) && fechaEncuesta.before(fechaFinPeriodo)) {
@@ -67,6 +67,7 @@ public class Llamada implements IAgregado {
     }
 
     //Metodo 23
+    //Metodo 13 - Iterator
     public ArrayList<String> getRespuestasCliente() {
         ArrayList<String> vectorRespuestas = new ArrayList<String>();
         ArrayList<Object> listaObject = new ArrayList<>(respuestaDeEncuesta);
@@ -94,6 +95,7 @@ public class Llamada implements IAgregado {
     }
 
     //Metodo 26
+    //Metodo 22 - Iterator
     public ArrayList<RespuestaDeCliente> getRespuestaDeEncuesta() {
         return respuestaDeEncuesta;
     }
@@ -129,7 +131,7 @@ public class Llamada implements IAgregado {
     public String getNumeroLlamada() {
         return String.valueOf(numeroLlamada);
     }
-
+    //Metodo 14 - Iterator
     @Override
     public IIterador crearIterador(ArrayList<Object> elementos, ArrayList<Object> filtros) {
         IteradorRespuestaCliente iteradorRespuestaCliente = new IteradorRespuestaCliente(elementos);

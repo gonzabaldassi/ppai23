@@ -71,8 +71,8 @@
                           <Group type="103" groupAlignment="0" attributes="0">
                               <Group type="102" attributes="0">
                                   <Component id="jButton1Confirmar" min="-2" max="-2" attributes="0"/>
-                                  <EmptySpace pref="82" max="32767" attributes="0"/>
-                                  <Component id="jButtonCancelar" min="-2" pref="87" max="-2" attributes="0"/>
+                                  <EmptySpace pref="130" max="32767" attributes="0"/>
+                                  <Component id="jButtonCancelar" min="-2" max="-2" attributes="0"/>
                               </Group>
                               <Component id="jDateChooserFechaInicio" max="32767" attributes="0"/>
                               <Component id="jDateChooserFechaFin" max="32767" attributes="0"/>

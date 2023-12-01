@@ -26,6 +26,7 @@ public class Pregunta {
     }
     
     //Metodo 31
+    //Metodo 38 - Iterator
     public String getDescripcionPregunta(){
         return descripcionPregunta;
     }

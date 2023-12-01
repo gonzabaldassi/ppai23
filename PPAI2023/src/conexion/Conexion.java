@@ -31,7 +31,7 @@ public class Conexion {
         
         String BD = "jdbc:postgresql://localhost:5432/ppai";
         String usuario = "postgres";
-        String password = "123456";
+        String password = "050Rober3110";
 
         
         llamadas.removeAll(llamadas);

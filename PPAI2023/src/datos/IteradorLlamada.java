@@ -16,11 +16,12 @@ public class IteradorLlamada implements IIterador {
     private ArrayList<Object> filtros;
     private int indiceActual;
 
+    //Metodo 3 - Iterator
     public IteradorLlamada(ArrayList<Object> elementos, ArrayList<Object> filtros) {
         this.elementos = elementos;
         this.filtros = filtros;
     }
-
+    //Metodo 6 - Iterator
     @Override
     public Object actual() {
         if (cumpleFiltro(filtros)) {
@@ -29,7 +30,7 @@ public class IteradorLlamada implements IIterador {
             return "";
         }
     }
-
+    //Metodo 5 - Iterator
     @Override
     public Boolean haTerminado() {
         if (indiceActual == elementos.size()) {
@@ -38,7 +39,7 @@ public class IteradorLlamada implements IIterador {
             return false;
         }
     }
-
+    //Metodo 7 - Iterator
     @Override
     public Boolean cumpleFiltro(ArrayList<Object> filtros) {
 
@@ -55,12 +56,12 @@ public class IteradorLlamada implements IIterador {
             return false;
         }
     }
-
+    //Metodo 4 - Iterator
     @Override
     public void primero() {
         this.indiceActual = 0;
     }
-
+    //Metodo 10 - Iterator
     @Override
     public void siguiente() {
         this.indiceActual += 1;

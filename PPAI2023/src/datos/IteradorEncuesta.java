@@ -15,13 +15,14 @@ public class IteradorEncuesta implements IIterador{
     private ArrayList<Object> elementos;
     private ArrayList<Object> filtros;
     private int indiceActual;
-
+    
+    //Metodo 25 - Iterator
     public IteradorEncuesta(ArrayList<Object> elementos, ArrayList<Object> filtros) {
         this.elementos = elementos;
         this.filtros = filtros;
     }
     
-    
+    //Metodo 28 - Iterator
     @Override
     public Object actual() {
         if(cumpleFiltro(filtros)){
@@ -30,7 +31,7 @@ public class IteradorEncuesta implements IIterador{
             return "";
         }
     }
-
+    //Metodo 27 - Iterator
     @Override
     public Boolean haTerminado() {
         if(this.indiceActual == elementos.size()){
@@ -39,7 +40,7 @@ public class IteradorEncuesta implements IIterador{
             return false;
         }
     }
-
+    //Metodo 29 - Iterator
     @Override
     public Boolean cumpleFiltro(ArrayList<Object> filtros) {
         Encuesta encuesta = (Encuesta)elementos.get(indiceActual);
@@ -51,12 +52,12 @@ public class IteradorEncuesta implements IIterador{
             return false;
         }
     }
-
+    //Metodo 26 - Iterator
     @Override
     public void primero() {
         this.indiceActual = 0;
     }
-
+    //Metodo 30 - Iterator
     @Override
     public void siguiente() {
         this.indiceActual+=1;
