@@ -9,3 +9,7 @@ Proyecto práctico de aplicación integrador para la materia Diseño de sistemas
 5. Ejecutar la aplicación
 
 Los scripts de "script_prueba_ppai" y "script_eliminacion_prueba" son para probar en el momento de la exposicion que realmente la aplicación se conecta con la db.
+
+##Patrones de diseño utilizados
+* Iterator
+* Singleton
